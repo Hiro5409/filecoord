@@ -1,0 +1,42 @@
+included:
+  - Package.swift
+  - Sources
+  - Tests
+
+only_rules:
+  - async_without_await
+  - blanket_disable_command
+  - contains_over_filter_count
+  - contains_over_filter_is_empty
+  - contains_over_first_not_nil
+  - contains_over_range_nil_comparison
+  - discarded_notification_center_observer
+  - duplicate_conditions
+  - duplicate_enum_cases
+  - duplicated_key_in_dictionary_literal
+  - empty_collection_literal
+  - empty_count
+  - empty_string
+  - fatal_error_message
+  - first_where
+  - flatmap_over_map_reduce
+  - force_cast
+  - force_try
+  - force_unwrapping
+  - identical_operands
+  - incompatible_concurrency_annotation
+  - last_where
+  - lower_acl_than_parent
+  - no_empty_block
+  - reduce_boolean
+  - reduce_into
+  - redundant_nil_coalescing
+  - sorted_first_last
+  - superfluous_disable_command
+  - unhandled_throwing_task
+  - unneeded_throws_rethrows
+  - unused_parameter
+  - variable_shadowing
+  - yoda_condition
+
+strict: true

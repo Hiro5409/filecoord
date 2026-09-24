@@ -1,0 +1,68 @@
+min_version = "2026.9.4"
+
+[tools]
+actionlint = "1.7.12"
+gitleaks = "8.30.1"
+swiftlint = "0.65.1"
+typos = "1.50.1"
+zizmor = "1.30.1"
+
+[tool_config]
+locked = true
+
+[settings]
+lockfile = true
+lockfile_platforms = ["macos-arm64", "macos-x64"]
+
+[tasks.build]
+description = "Build the debug executable"
+run = "swift build"
+
+[tasks."build:release"]
+description = "Build the release executable with warnings as errors"
+run = "swift build -c release -Xswiftc -warnings-as-errors"
+
+[tasks.format]
+description = "Format Swift sources"
+run = "swift format --in-place --recursive Package.swift Sources Tests"
+
+[tasks.lint]
+description = "Run all static checks"
+depends = ["lint:swift", "lint:copy", "lint:actions"]
+
+[tasks."lint:swift"]
+hide = true
+run = [
+  "swift format lint --recursive Package.swift Sources Tests",
+  "swiftlint lint --disable-sourcekit --quiet",
+]
+
+[tasks."lint:copy"]
+hide = true
+run = "typos"
+
+[tasks."lint:actions"]
+hide = true
+run = [
+  "actionlint -no-color",
+  "zizmor --offline --persona=pedantic --strict-collection --color=never .",
+]
+
+[tasks.test]
+description = "Run the CLI integration test suite"
+run = [
+  "xcodebuild -version >/dev/null",
+  "swift test",
+]
+
+[tasks.secrets]
+description = "Scan committed history for secrets"
+run = "gitleaks git --no-banner --redact"
+
+[tasks.check]
+description = "Run the same test, release build, and lint checks as CI"
+run = [
+  { task = "test" },
+  { task = "build:release" },
+  { task = "lint" },
+]
