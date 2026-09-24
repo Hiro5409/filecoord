@@ -4,7 +4,13 @@
 
 ## Install
 
-Requires macOS 14 or later and Swift 6 or later to build from source.
+Requires macOS 14 or later. Install with Homebrew:
+
+```sh
+brew install Hiro5409/tap/filecoord
+```
+
+To build from source, use Swift 6 or later:
 
 ```sh
 swift build -c release
